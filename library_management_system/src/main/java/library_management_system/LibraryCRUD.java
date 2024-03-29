@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class LibraryCRUD {
 
@@ -71,4 +73,41 @@ public class LibraryCRUD {
 		connection.close();
 		return result;
 	}
+
+	public int addBooksBatch(ArrayList<Book> bookList) throws Exception {
+		
+		Connection connection = getConnection();
+		String query = "insert into book(id, name, author, genre) values (?, ?, ?, ?)";
+
+		PreparedStatement preparedStatement = connection.prepareStatement(query);
+		
+		bookList.forEach(book ->
+		{
+			try {
+				preparedStatement.setInt(1, book.getId());
+				preparedStatement.setString(2, book.getName());
+				preparedStatement.setString(3, book.getAuthor());
+				preparedStatement.setString(4, book.getGenre());
+				preparedStatement.addBatch();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				
+		});
+		
+
+		int[] result = preparedStatement.executeBatch();
+		int count = 0;
+		
+		for(int r : result)
+		{
+			count+=r;
+		}
+		connection.close();
+		return count;
+
+	}
+
 }

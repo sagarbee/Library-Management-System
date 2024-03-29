@@ -1,5 +1,6 @@
 package library_management_system;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class LibraryMain {
@@ -9,7 +10,7 @@ public class LibraryMain {
 		boolean flag = true;
 		while (flag) {
 			Scanner scanner = new Scanner(System.in);
-			System.out.println("welcome User !!!!!!!!! \n1. SignUp \n2. LogIn \n3.Exit");
+			System.out.println("welcome to library !!!!!!!!! \n1. SignUp \n2. LogIn \n3.Exit");
 			int choice = scanner.nextInt();
 
 			LibraryCRUD crud = new LibraryCRUD();
@@ -38,7 +39,6 @@ public class LibraryMain {
 
 				if (result != 0) {
 					System.out.println("SignUp sucessfull!!!!!!!");
-					break;
 				} else {
 					System.out.println("SignUp Failed");
 
@@ -69,6 +69,58 @@ public class LibraryMain {
 					System.out.println("User is not registered of email :" + email);
 				}
 
+				if (login) {
+
+					System.out.println("Please select option: \n1.Add Book\n2.Search Book\n3.Delete Book ");
+					int bookChoice = scanner.nextInt();
+
+					switch (bookChoice) {
+					case 1: {
+
+						System.out.print("Enter the number of books you want to add: ");
+						int numOfBooks = scanner.nextInt();
+
+						/* Created an ArrayList */
+
+						ArrayList<Book> booksList = new ArrayList<>();
+
+						for (int i = 0; i < numOfBooks; i++) {
+
+							Book book = new Book();
+
+							System.out.print("Enter Book Id: ");
+							int id = scanner.nextInt();
+							scanner.nextLine();
+							System.out.print("Enter Book Name: ");
+							String bookName = scanner.nextLine();
+
+							System.out.print("Enter Book Author Name: ");
+							String author = scanner.nextLine();
+
+							System.out.print("Enter Book Genre: ");
+							String genre = scanner.nextLine();
+
+							book.setId(id);
+							book.setName(bookName);
+							book.setAuthor(author);
+							book.setGenre(genre);
+
+							/* Added book in ArrayList using add method */
+							booksList.add(book);
+						}
+						/* List is pass as argument to addBooksBatch method of LibraryCRUD */
+						int result = crud.addBooksBatch(booksList);
+
+						if (result != 0) {
+							System.out.println("Books added succefully");
+						} else {
+							System.out.println("Failed to add books");
+						}
+						break;
+					}
+					}
+
+				}
 				if (failed) {
 					System.out.println("1. Forget password");
 					int key = scanner.nextInt();
@@ -101,6 +153,7 @@ public class LibraryMain {
 			}
 				break;
 			}
+
 		}
 
 	}
