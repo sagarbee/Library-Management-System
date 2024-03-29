@@ -118,6 +118,28 @@ public class LibraryMain {
 						}
 						break;
 					}
+					case 2: {
+
+						System.out.print("How you want to search: \n1.Book ID\n2.Book Name\n3.Author Name\n4.Genre");
+						int searchOption = scanner.nextInt();
+						switch (searchOption) {
+						case 1: {
+							System.out.print("Enter Book ID: ");
+							int bookId = scanner.nextInt();
+							Book foundBook = crud.searchById(bookId);
+							if (foundBook != null) {
+								System.out.println("Book Found");
+								System.out.println("ID: " + foundBook.getId());
+								System.out.println("Name: " + foundBook.getName());
+								System.out.println("Author: " + foundBook.getAuthor());
+								System.out.println("Genre: " + foundBook.getGenre());
+							} else {
+								System.out.println("Book not found.");
+							}
+
+						}
+						}
+					}
 					}
 
 				}

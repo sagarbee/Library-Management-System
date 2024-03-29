@@ -109,5 +109,30 @@ public class LibraryCRUD {
 		return count;
 
 	}
+	
+	public Book searchById(int id) throws Exception
+	{
+		Connection connection = getConnection();
+		Book book = null;
+		String query = "select * from book where id = ?";
+		PreparedStatement preparedStatement = connection.prepareStatement(query);
+		preparedStatement.setInt(1, id);
+		
+		ResultSet resultSet = preparedStatement.executeQuery();
+		
+		if(resultSet.next())
+		{
+			book = new Book();
+			book.setId(resultSet.getInt("id"));
+			book.setName(resultSet.getString("name"));
+			book.setAuthor(resultSet.getString("author"));
+			book.setGenre(resultSet.getString("genre"));
+			
+		}
+		connection.close();
+		return book;
+		
+	}
+	
 
 }
