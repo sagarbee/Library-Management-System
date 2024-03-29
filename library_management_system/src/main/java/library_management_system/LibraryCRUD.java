@@ -134,5 +134,12 @@ public class LibraryCRUD {
 		
 	}
 	
-
+	public Book searchByName(String name) throws Exception{
+		Connection connection = getConnection();
+		Book book = null;
+		String query = "select * from book where name = ?";
+		PreparedStatement preparedStatement = connection.prepareStatement(query);
+		preparedStatement.setString(1,name);
+			
+	}
 }
