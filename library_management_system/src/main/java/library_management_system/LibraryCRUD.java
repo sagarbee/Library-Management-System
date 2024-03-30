@@ -134,12 +134,29 @@ public class LibraryCRUD {
 		
 	}
 	
-	public Book searchByName(String name) throws Exception{
+	/* Creating a ArrayList which can store book data by given name*/
+	public ArrayList<Book> searchByNameList(String name) throws Exception{
 		Connection connection = getConnection();
-		Book book = null;
+		
+		ArrayList<Book> bookList = new ArrayList();
+
 		String query = "select * from book where name = ?";
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setString(1,name);
-			
+		
+		ResultSet resultSet = preparedStatement.executeQuery();
+		while(resultSet.next())
+		{
+			Book book = new Book();
+			book.setId(resultSet.getInt("id"));
+			book.setName(resultSet.getString("name"));
+			book.setAuthor(resultSet.getString("author"));
+			book.setGenre(resultSet.getString("genre"));
+			bookList.add(book);
+		}
+		connection.close();
+		
+		
+		return bookList;
 	}
 }
