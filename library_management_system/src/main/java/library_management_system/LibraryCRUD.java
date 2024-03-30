@@ -135,12 +135,37 @@ public class LibraryCRUD {
 	}
 	
 	/* Creating a ArrayList which can store book data by given name*/
-	public ArrayList<Book> searchByNameList(String name) throws Exception{
+	public Book searchByBookName(String name) throws Exception{
+		Connection connection = getConnection();
+		
+		Book book = null;
+
+		String query = "select * from book where name = ?";
+		PreparedStatement preparedStatement = connection.prepareStatement(query);
+		preparedStatement.setString(1,name);
+		
+		ResultSet resultSet = preparedStatement.executeQuery();
+		while(resultSet.next())
+		{
+			book = new Book();
+			book.setId(resultSet.getInt("id"));
+			book.setName(resultSet.getString("name"));
+			book.setAuthor(resultSet.getString("author"));
+			book.setGenre(resultSet.getString("genre"));
+			
+		}
+		connection.close();
+		
+		
+		return book;
+	}
+	
+	public ArrayList<Book> searchByAuthorList(String name) throws Exception{
 		Connection connection = getConnection();
 		
 		ArrayList<Book> bookList = new ArrayList();
 
-		String query = "select * from book where name = ?";
+		String query = "select * from book where author = ?";
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setString(1,name);
 		
@@ -159,4 +184,66 @@ public class LibraryCRUD {
 		
 		return bookList;
 	}
+	
+	public ArrayList<Book> searchByGenreList(String name) throws Exception{
+		Connection connection = getConnection();
+		
+		ArrayList<Book> bookList = new ArrayList();
+
+		String query = "select * from book where genre = ?";
+		PreparedStatement preparedStatement = connection.prepareStatement(query);
+		preparedStatement.setString(1,name);
+		
+		ResultSet resultSet = preparedStatement.executeQuery();
+		while(resultSet.next())
+		{
+			Book book = new Book();
+			book.setId(resultSet.getInt("id"));
+			book.setName(resultSet.getString("name"));
+			book.setAuthor(resultSet.getString("author"));
+			book.setGenre(resultSet.getString("genre"));
+			bookList.add(book);
+		}
+		connection.close();
+		
+		
+		return bookList;
+	}
+	
+	public void deleteBookById(int id) throws Exception {
+	    Connection connection = getConnection();
+
+	    String query = "DELETE FROM book WHERE id = ?";
+	    PreparedStatement preparedStatement = connection.prepareStatement(query);
+	    preparedStatement.setInt(1, id);
+
+	    int rowsDeleted = preparedStatement.executeUpdate();
+	    if (rowsDeleted > 0) {
+	        System.out.println("Book with ID " + id + " deleted successfully.");
+	    } else {
+	        System.out.println("No book found with the given ID.");
+	    }
+
+	    connection.close();
+	}
+
+	
+	public void deleteBookByName(String name) throws Exception
+	{
+		Connection connection = getConnection();
+		String query = "delete from book where name = ?";
+		PreparedStatement preparedStatement = connection.prepareStatement(query);
+		preparedStatement.setString(1, name);
+		
+		int rowsDeleted = preparedStatement.executeUpdate();
+	    if (rowsDeleted > 0) {
+	        System.out.println("Book with name " + name + " deleted successfully.");
+	    } else {
+	        System.out.println("No book found with the given name.");
+	    }
+
+	    connection.close();
+		
+	}
+	
 }

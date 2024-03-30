@@ -125,7 +125,8 @@ public class LibraryMain {
 						}
 						case 2: {
 
-							System.out.print("How you want to search: \n1.Book ID\n2.Book Name\n3.Author Name\n4.Genre");
+							System.out
+									.print("How you want to search: \n1.Book ID\n2.Book Name\n3.Author Name\n4.Genre");
 							int searchOption = scanner.nextInt();
 
 							switch (searchOption) {
@@ -150,15 +151,13 @@ public class LibraryMain {
 								System.out.print("Enter Book Name: ");
 								String bookName = scanner.nextLine();
 
-								ArrayList<Book> foundBook = crud.searchByNameList(bookName);
-								if (!foundBook.isEmpty()) {
+								Book foundBook = crud.searchByBookName(bookName);
+								if (foundBook != null) {
 									System.out.println("Book Found");
-
-									for (Book found : foundBook) {
-										System.out.println("ID: " + found.getId());
-										System.out.println("Name: " + found.getName());
-										System.out.println("Author: " + found.getAuthor());
-										System.out.println("Genre: " + found.getGenre());
+										System.out.println("ID: " + foundBook.getId());
+										System.out.println("Name: " + foundBook.getName());
+										System.out.println("Author: " + foundBook.getAuthor());
+										System.out.println("Genre: " + foundBook.getGenre());
 
 									}
 								} else {
@@ -167,14 +166,76 @@ public class LibraryMain {
 								break;
 
 							}
+							case 3: {
+								scanner.nextLine();
+								System.out.println("Enter Book Author: ");
+								String bookName = scanner.nextLine();
+
+								ArrayList<Book> foundBook = crud.searchByAuthorList(bookName);
+
+								if (!foundBook.isEmpty()) {
+									System.out.println("Book found");
+									for (Book found : foundBook) {
+										System.out.println("ID: " + found.getId());
+										System.out.println("Name: " + found.getName());
+										System.out.println("Author: " + found.getAuthor());
+										System.out.println("Genre: " + found.getGenre());
+									}
+								} else {
+									System.out.println("Book not found.");
+								}
+								break;
 							}
+							case 4: {
+								scanner.nextLine();
+								System.out.println("Enter Book Genre: ");
+								String bookName = scanner.nextLine();
+
+								ArrayList<Book> foundBook = crud.searchByGenreList(bookName);
+
+								if (!foundBook.isEmpty()) {
+									System.out.println("Book found");
+									for (Book found : foundBook) {
+										System.out.println("ID: " + found.getId());
+										System.out.println("Name: " + found.getName());
+										System.out.println("Author: " + found.getAuthor());
+										System.out.println("Genre: " + found.getGenre());
+									}
+								} else {
+									System.out.println("Book not found.");
+								}
+								break;
+							}
+							}
+							break;
 						}
-						case 3:
-						{
+						case 3: {
+
+							System.out.println("Delete book by \n1.ID\n2.Name");
+							int deleteBy = scanner.nextInt();
+
+							switch (deleteBy) {
+							case 1: {
+
+								scanner.nextLine();
+								System.out.print("Enter Book ID: ");
+								int bookId = scanner.nextInt();
+								crud.deleteBookById(bookId);
+
+							}
+							case 2: {
+
+								scanner.nextLine();
+								System.out.print("Enter Book Name: ");
+								String deleteBookName = scanner.nextLine();
+								crud.deleteBookByName(deleteBookName);
+							}
+							}
+
 							break;
 						}
 						case 4: {
-							
+
 							goBack = false;
 							break;
 						}
@@ -218,5 +279,4 @@ public class LibraryMain {
 
 		}
 
-	}
-}
+}}
