@@ -154,12 +154,11 @@ public class LibraryMain {
 								Book foundBook = crud.searchByBookName(bookName);
 								if (foundBook != null) {
 									System.out.println("Book Found");
-										System.out.println("ID: " + foundBook.getId());
-										System.out.println("Name: " + foundBook.getName());
-										System.out.println("Author: " + foundBook.getAuthor());
-										System.out.println("Genre: " + foundBook.getGenre());
+									System.out.println("ID: " + foundBook.getId());
+									System.out.println("Name: " + foundBook.getName());
+									System.out.println("Author: " + foundBook.getAuthor());
+									System.out.println("Genre: " + foundBook.getGenre());
 
-									}
 								} else {
 									System.out.println("Book not found.");
 								}
@@ -279,4 +278,5 @@ public class LibraryMain {
 
 		}
 
-}}
+	}
+}
